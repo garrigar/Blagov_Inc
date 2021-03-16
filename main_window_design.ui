@@ -7,11 +7,29 @@
     <x>0</x>
     <y>0</y>
     <width>655</width>
-    <height>653</height>
+    <height>281</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>655</width>
+    <height>281</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>655</width>
+    <height>281</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Таблица</string>
+   <string>Анализ доходов институтов - Выбор параметров</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="l_steps">
@@ -339,53 +357,17 @@
      <string>платники очно</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="chb_table_new_window">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>166</y>
-      <width>221</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Показать таблицу в новом окне</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="chb_show_graphs">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>190</y>
-      <width>191</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Показать графики</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="button_gen">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>220</y>
+      <x>440</x>
+      <y>195</y>
       <width>171</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Сгенерировать</string>
-    </property>
-   </widget>
-   <widget class="QTableView" name="tableView">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>260</y>
-      <width>581</width>
-      <height>351</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLineEdit" name="ledit_numb_stud">
@@ -478,16 +460,6 @@
      <string>Выбрать</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>655</width>
-     <height>26</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

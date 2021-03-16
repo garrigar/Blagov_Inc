@@ -3,18 +3,20 @@ import os  # Отсюда нам понадобятся методы для от
 
 from PyQt5 import QtWidgets
 
-import design  # Это наш конвертированный файл дизайна
+import main_window_design  # Это наш конвертированный файл дизайна
 import data_handler
 import os.path
 import numpy as np
 import pandas as pd
 import table_model
+import table_window
+import table_window_design
 
 
-class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, main_window_design.Ui_MainWindow):
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
-        # и т.д. в файле design.py
+        # и т.д. в файле main_window_design.py
         super().__init__()
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
 
@@ -32,12 +34,22 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.button_submit_file_price.clicked.connect(lambda: self._handle_file_select_button(
             "Выберите файл с инфой о затратах", self.ledit_price))
 
-        print(self.chb_group_1.property("key"))
-
-        self.data_handler = data_handler.DataHandler("xls/1.xls", "xls/2.xlsx")
-        # self.button_gen.clicked.connect(
-        #     lambda: print(self.data_handler.result_table("бакалавры", "3 группа", "бюджет очно")[0]))
         self.button_gen.clicked.connect(self._handle_gen_button)
+
+        self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
+        self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
+
+        self._table_window = None
+
+    def _open_table(self, dataframe, description):
+        self._table_window = table_window.TableWindow(dataframe, description)
+        self._table_window.show()
+
+    def _ttt(self):
+        for el in self.tableView.selectedIndexes():
+            # print(el.data())
+            print(el.row(), el.column())
+        # print(len(self.tableView.selectedIndexes()[]))
 
     def _bind_master_and_servants(self, master_checkbox, servant_checkboxes: list):
 
@@ -103,15 +115,15 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
                                                      chb_form.property("key"))[0]
 
             data = pd.DataFrame(ans, columns=institutes_list,
-                                # index=[s[:3]+'-'+s[-3:] for s in spends_list])
-                                index=spends_list)
-            model = table_model.TableModel(data)
-            self.tableView.setModel(model)
+                                index=[s[:3] + '-' + s[-3:] for s in spends_list])
+            # index=spends_list)
+
+            self._open_table(data, "LOREM IPSUM")
 
 
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
-    window = ExampleApp()  # Создаём объект класса ExampleApp
+    window = MainWindow()  # Создаём объект класса MainWindow
     window.show()  # Показываем окно
     app.exec_()  # и запускаем приложение
 

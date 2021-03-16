@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'design.ui'
+# Form implementation generated from reading ui file 'main_window_design.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.2
 #
@@ -14,7 +14,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(655, 653)
+        MainWindow.resize(655, 281)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QtCore.QSize(655, 281))
+        MainWindow.setMaximumSize(QtCore.QSize(655, 281))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.l_steps = QtWidgets.QLabel(self.centralwidget)
@@ -104,18 +111,9 @@ class Ui_MainWindow(object):
         self.chb_form_pay_full.setChecked(False)
         self.chb_form_pay_full.setTristate(False)
         self.chb_form_pay_full.setObjectName("chb_form_pay_full")
-        self.chb_table_new_window = QtWidgets.QCheckBox(self.centralwidget)
-        self.chb_table_new_window.setGeometry(QtCore.QRect(420, 166, 221, 21))
-        self.chb_table_new_window.setObjectName("chb_table_new_window")
-        self.chb_show_graphs = QtWidgets.QCheckBox(self.centralwidget)
-        self.chb_show_graphs.setGeometry(QtCore.QRect(420, 190, 191, 21))
-        self.chb_show_graphs.setObjectName("chb_show_graphs")
         self.button_gen = QtWidgets.QPushButton(self.centralwidget)
-        self.button_gen.setGeometry(QtCore.QRect(420, 220, 171, 31))
+        self.button_gen.setGeometry(QtCore.QRect(440, 195, 171, 31))
         self.button_gen.setObjectName("button_gen")
-        self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setGeometry(QtCore.QRect(30, 260, 581, 351))
-        self.tableView.setObjectName("tableView")
         self.ledit_numb_stud = QtWidgets.QLineEdit(self.centralwidget)
         self.ledit_numb_stud.setGeometry(QtCore.QRect(30, 50, 271, 20))
         self.ledit_numb_stud.setText("")
@@ -139,10 +137,6 @@ class Ui_MainWindow(object):
         self.button_submit_file_price.setGeometry(QtCore.QRect(400, 90, 141, 31))
         self.button_submit_file_price.setObjectName("button_submit_file_price")
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 655, 26))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
@@ -152,7 +146,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Таблица"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Анализ доходов институтов - Выбор параметров"))
         self.l_steps.setText(_translate("MainWindow", "Ступени"))
         self.chb_st_bak.setText(_translate("MainWindow", "Бакалавры \n"
 "+ Специалисты"))
@@ -178,8 +172,6 @@ class Ui_MainWindow(object):
         self.chb_form_bud_full.setProperty("key", _translate("MainWindow", "бюджет очно"))
         self.chb_form_pay_full.setText(_translate("MainWindow", "Платники очно"))
         self.chb_form_pay_full.setProperty("key", _translate("MainWindow", "платники очно"))
-        self.chb_table_new_window.setText(_translate("MainWindow", "Показать таблицу в новом окне"))
-        self.chb_show_graphs.setText(_translate("MainWindow", "Показать графики"))
         self.button_gen.setText(_translate("MainWindow", "Сгенерировать"))
         self.ledit_numb_stud.setPlaceholderText(_translate("MainWindow", "Файл студентов"))
         self.ledit_price.setPlaceholderText(_translate("MainWindow", "Файл расценок"))
