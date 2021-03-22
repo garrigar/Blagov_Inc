@@ -38,7 +38,6 @@ class Ui_Form(object):
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.btn_save_table = QtWidgets.QPushButton(Form)
-        self.btn_save_table.setEnabled(False)
         self.btn_save_table.setObjectName("btn_save_table")
         self.gridLayout.addWidget(self.btn_save_table, 0, 0, 1, 1)
         self.btn_build_graphs = QtWidgets.QPushButton(Form)
@@ -80,15 +79,15 @@ class Ui_Form(object):
 "ИИМЭ – институт информатики, математики и электроники,\n"
 "ИЭУ – институт экономики и управления,\n"
 "ЮИ – юридический институт."))
-        self.label_2.setText(_translate("Form", "Обозначения затрат:\n"
-"1\n"
-"2\n"
-"3\n"
-"4\n"
-"5\n"
-"6\n"
-"7\n"
-""))
+#         self.label_2.setText(_translate("Form", "Обозначения затрат:\n"
+# "1\n"
+# "2\n"
+# "3\n"
+# "4\n"
+# "5\n"
+# "6\n"
+# "7\n"
+# ""))
         self.btn_save_table.setText(_translate("Form", "Сохранить таблицу"))
         self.btn_build_graphs.setText(_translate("Form", "Построить графики"))
         self.comboBox_row_col.setItemText(0, _translate("Form", "по строкам"))

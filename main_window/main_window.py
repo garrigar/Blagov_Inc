@@ -34,8 +34,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_gen.clicked.connect(self._handle_gen_button)
 
         # TODO: remove
-        # self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
-        # self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
+        self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
+        self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
 
         self._table_windows = []
 
@@ -114,7 +114,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         degree = chb_st.property("key")
                         group = chb_group.property("key")
                         form = chb_form.property("key")
-                        ans += data_hnd.result_table(degree, group, form)[0]
+                        ans += np.around(data_hnd.result_table(degree, group, form)[0], 1)
 
             # print(k)
 

@@ -3,6 +3,7 @@ from itertools import groupby
 import matplotlib.pyplot as plt
 from PyQt5 import QtWidgets
 
+import pandas as pd
 import table_model
 from .table_window_design import Ui_Form
 
@@ -16,10 +17,12 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
 
         self._dataframe = dataframe
         self._description = description
-
+        self._set_text_to_label()
         model = table_model.TableModel(self._dataframe)
         self.tableView.setModel(model)
         self.label_description.setText(self._description)
+        self.btn_save_table.clicked.connect(lambda: self._handle_btn_save_table(
+            "Сохранение таблицы"))
 
         self.btn_build_graphs.clicked.connect(self._handle_btn_build_graphs)
 
@@ -71,4 +74,26 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
         fig = plt.figure()
         fig.canvas.set_window_title(title)
         plt.bar(xs, ys)
+        plt.grid()
+        plt.ylabel("Рублей (тыс.)")
+        for index in range(len(ys)):
+            plt.text(index, ys[index] + 1, round(ys[index], 1), horizontalalignment='center')
+
         plt.title(f'{title}\n{self._description}')
+
+    def _handle_btn_save_table(self, prompt):
+        # Данный метод сохраняет выведенную на экран таблицу (в table_window) по нажатию на кнопку сохранить
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, prompt, "", "Excel-файлы (*.xlsx)")
+        print(filename[0])
+        if filename[0] != "":
+            self._dataframe.to_excel(filename[0])
+        else:
+            raise Exception
+
+    def _set_text_to_label(self):
+        result_str = "Обозначения затрат:\n"
+        inn = 1
+        for row in self._dataframe.index:
+            result_str+=f"{inn} - {row}\n"
+            inn+=1
+        self.label_2.setText(result_str)
