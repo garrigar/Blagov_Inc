@@ -1,17 +1,16 @@
 import os  # Отсюда нам понадобятся методы для отображения содержимого директорий
 import os.path
-import sys  # sys нужен для передачи argv в QApplication
 
 import numpy as np
 import pandas as pd
 from PyQt5 import QtWidgets
 
 import data_handler
-import main_window_design  # Это наш конвертированный файл дизайна
-import table_window
+from table_window import TableWindow
+from .main_window_design import Ui_MainWindow
 
 
-class MainWindow(QtWidgets.QMainWindow, main_window_design.Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле main_window_design.py
@@ -35,13 +34,13 @@ class MainWindow(QtWidgets.QMainWindow, main_window_design.Ui_MainWindow):
         self.button_gen.clicked.connect(self._handle_gen_button)
 
         # TODO: remove
-        self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
-        self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
+        # self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
+        # self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
 
         self._table_windows = []
 
     def _open_table(self, dataframe, description):
-        tw = table_window.TableWindow(dataframe, description)
+        tw = TableWindow(dataframe, description)
         tw.show()
         self._table_windows.append(tw)
 
@@ -102,25 +101,26 @@ class MainWindow(QtWidgets.QMainWindow, main_window_design.Ui_MainWindow):
                                                                                list_chb_form[0].property("key"))
             ans = np.zeros_like(array_sample, dtype=np.float64)
 
+            desc_degrees = [chb_st.property("key") for chb_st in list_chb_st]
+            desc_groups = [chb_group.property("key") for chb_group in list_chb_group]
+            desc_forms = [chb_form.property("key") for chb_form in list_chb_form]
+
+            # k = 0
+
             for chb_st in list_chb_st:
                 for chb_group in list_chb_group:
                     for chb_form in list_chb_form:
-                        ans += data_hnd.result_table(chb_st.property("key"),
-                                                     chb_group.property("key"),
-                                                     chb_form.property("key"))[0]
+                        # k += 1
+                        degree = chb_st.property("key")
+                        group = chb_group.property("key")
+                        form = chb_form.property("key")
+                        ans += data_hnd.result_table(degree, group, form)[0]
+
+            # print(k)
 
             data = pd.DataFrame(ans, columns=institutes_list, index=spends_list)
 
+            desc_str = f"ступени: ({', '.join(desc_degrees)}), группы: ({', '.join(desc_groups)}), формы: ({', '.join(desc_forms)})"
+
             # TODO: description
-            self._open_table(data, "LOREM IPSUM")
-
-
-def main():
-    app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
-    window = MainWindow()  # Создаём объект класса MainWindow
-    window.show()  # Показываем окно
-    app.exec_()  # и запускаем приложение
-
-
-if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
-    main()  # то запускаем функцию main()
+            self._open_table(data, desc_str)  # "<PARAMETERS DESCRIPTION>")
