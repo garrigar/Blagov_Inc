@@ -38,6 +38,7 @@ class Ui_Form(object):
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.btn_save_table = QtWidgets.QPushButton(Form)
+        self.btn_save_table.setEnabled(True)
         self.btn_save_table.setObjectName("btn_save_table")
         self.gridLayout.addWidget(self.btn_save_table, 0, 0, 1, 1)
         self.btn_build_graphs = QtWidgets.QPushButton(Form)
@@ -79,17 +80,19 @@ class Ui_Form(object):
 "ИИМЭ – институт информатики, математики и электроники,\n"
 "ИЭУ – институт экономики и управления,\n"
 "ЮИ – юридический институт."))
-#         self.label_2.setText(_translate("Form", "Обозначения затрат:\n"
-# "1\n"
-# "2\n"
-# "3\n"
-# "4\n"
-# "5\n"
-# "6\n"
-# "7\n"
-# ""))
+        self.label_2.setText(_translate("Form", "<html><head/><body><p>Обозначения затрат:</p><p>1 - Затраты на фонд оплаты труда институтов</p><p>2 - Затраты на закупку материалов и оборудования</p><p>3 - Затраты на командировки и стажировки</p><p>4 - Затраты на культурно-массовую и физкультурно-оздоровительную работу со студентами</p><p>5 - Затраты на фонд оплаты труда прочего персонала</p><p>6 - Прочие затраты</p><p>7 - ИТОГО</p></body></html>"))
         self.btn_save_table.setText(_translate("Form", "Сохранить таблицу"))
         self.btn_build_graphs.setText(_translate("Form", "Построить графики"))
         self.comboBox_row_col.setItemText(0, _translate("Form", "по строкам"))
         self.comboBox_row_col.setItemText(1, _translate("Form", "по столбцам"))
         self.label_description.setText(_translate("Form", "TextLabel"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())

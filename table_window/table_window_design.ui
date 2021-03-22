@@ -63,15 +63,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Обозначения затрат:
-1
-2
-3
-4
-5
-6
-7
-</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Обозначения затрат:&lt;/p&gt;&lt;p&gt;1 - Затраты на фонд оплаты труда институтов&lt;/p&gt;&lt;p&gt;2 - Затраты на закупку материалов и оборудования&lt;/p&gt;&lt;p&gt;3 - Затраты на командировки и стажировки&lt;/p&gt;&lt;p&gt;4 - Затраты на культурно-массовую и физкультурно-оздоровительную работу со студентами&lt;/p&gt;&lt;p&gt;5 - Затраты на фонд оплаты труда прочего персонала&lt;/p&gt;&lt;p&gt;6 - Прочие затраты&lt;/p&gt;&lt;p&gt;7 - ИТОГО&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

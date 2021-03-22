@@ -1,5 +1,5 @@
 from itertools import groupby
-
+import numpy as np
 import matplotlib.pyplot as plt
 from PyQt5 import QtWidgets
 
@@ -17,7 +17,6 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
 
         self._dataframe = dataframe
         self._description = description
-        self._set_text_to_label()
         model = table_model.TableModel(self._dataframe)
         self.tableView.setModel(model)
         self.label_description.setText(self._description)
@@ -85,15 +84,7 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
         # Данный метод сохраняет выведенную на экран таблицу (в table_window) по нажатию на кнопку сохранить
         filename = QtWidgets.QFileDialog.getSaveFileName(self, prompt, "", "Excel-файлы (*.xlsx)")
         print(filename[0])
-        if filename[0] != "":
+        try:
             self._dataframe.to_excel(filename[0])
-        else:
-            raise Exception
-
-    def _set_text_to_label(self):
-        result_str = "Обозначения затрат:\n"
-        inn = 1
-        for row in self._dataframe.index:
-            result_str+=f"{inn} - {row}\n"
-            inn+=1
-        self.label_2.setText(result_str)
+        except:
+            print("Ошибка сохранения таблицы!")
