@@ -1,8 +1,9 @@
 from itertools import groupby
-
+import numpy as np
 import matplotlib.pyplot as plt
 from PyQt5 import QtWidgets
 
+import pandas as pd
 import table_model
 from .table_window_design import Ui_Form
 
@@ -16,10 +17,11 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
 
         self._dataframe = dataframe
         self._description = description
-
         model = table_model.TableModel(self._dataframe)
         self.tableView.setModel(model)
         self.label_description.setText(self._description)
+        self.btn_save_table.clicked.connect(lambda: self._handle_btn_save_table(
+            "Сохранение таблицы"))
 
         self.btn_build_graphs.clicked.connect(self._handle_btn_build_graphs)
 
@@ -71,4 +73,18 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
         fig = plt.figure()
         fig.canvas.set_window_title(title)
         plt.bar(xs, ys)
+        plt.grid()
+        plt.ylabel("Рублей (тыс.)")
+        for index in range(len(ys)):
+            plt.text(index, ys[index] + 1, round(ys[index], 1), horizontalalignment='center')
+
         plt.title(f'{title}\n{self._description}')
+
+    def _handle_btn_save_table(self, prompt):
+        # Данный метод сохраняет выведенную на экран таблицу (в table_window) по нажатию на кнопку сохранить
+        filename = QtWidgets.QFileDialog.getSaveFileName(self, prompt, "", "Excel-файлы (*.xlsx)")
+        print(filename[0])
+        try:
+            self._dataframe.to_excel(filename[0])
+        except:
+            print("Ошибка сохранения таблицы!")
