@@ -2,8 +2,9 @@ from itertools import groupby
 
 import matplotlib.pyplot as plt
 import numpy as np
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 
+import definitions
 import table_model
 from .table_window_design import Ui_Form
 
@@ -14,6 +15,9 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
         # и т.д. в файле main_window_design.py
         super().__init__()
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
+
+        self.label_spends.setText(self.label_spends.text()
+                                  + '\n'.join([f'{key} - {value}' for key, value in definitions.SPENDS_NAMES.items()]))
 
         self._description = description
         self.label_description.setText(self._description)
@@ -26,10 +30,22 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
 
         self._model = table_model.TableModel(dataframe)
         self.tableView.setModel(self._model)
+        self._setup_stretch_and_color()
 
         self.btn_save_table.clicked.connect(lambda: self._handle_btn_save_table(
             "Сохранение таблицы"))
         self.btn_build_graphs.clicked.connect(self._handle_btn_build_graphs)
+
+    def _setup_stretch_and_color(self):
+        h_header = self.tableView.horizontalHeader()
+        for i in range(len(self._columns_names)):
+            h_header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
+        v_header = self.tableView.verticalHeader()
+        for i in range(len(self._rows_names)):
+            v_header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
+
+        self.tableView.setStyleSheet("QHeaderView::section { background-color:rgb"
+                                     + str(definitions.HEADER_COLOR_RGB) + " }")
 
     def _handle_btn_build_graphs(self):
         selected_indexes = self.tableView.selectedIndexes()
@@ -49,7 +65,8 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
 
         if self.comboBox_row_col.currentIndex() == 0:  # by rows
             key_sort_groupby = first
-            graph_titles = self._rows_names
+            graph_titles = [definitions.SPENDS_NAMES[spend_name] for spend_name in self._rows_names[:-1]]
+            graph_titles.append(self._rows_names[-1])  # ИТОГО не удлинняется
             key_indexes = second
             x_axis_labels = self._columns_names
 

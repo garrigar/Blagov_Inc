@@ -32,9 +32,9 @@ class Ui_Form(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
-        self.label_2 = QtWidgets.QLabel(Form)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout.addWidget(self.label_2)
+        self.label_spends = QtWidgets.QLabel(Form)
+        self.label_spends.setObjectName("label_spends")
+        self.horizontalLayout.addWidget(self.label_spends)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.btn_save_table = QtWidgets.QPushButton(Form)
@@ -60,7 +60,6 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tableView.sizePolicy().hasHeightForWidth())
         self.tableView.setSizePolicy(sizePolicy)
-        self.tableView.setStyleSheet("QHeaderView::section { background-color:gray }")
         self.tableView.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.tableView.setObjectName("tableView")
         self.verticalLayout.addWidget(self.tableView)
@@ -81,7 +80,8 @@ class Ui_Form(object):
 "ИИМЭ – институт информатики, математики и электроники,\n"
 "ИЭУ – институт экономики и управления,\n"
 "ЮИ – юридический институт."))
-        self.label_2.setText(_translate("Form", "<html><head/><body><p>Обозначения затрат:</p><p>1 - Затраты на фонд оплаты труда институтов</p><p>2 - Затраты на закупку материалов и оборудования</p><p>3 - Затраты на командировки и стажировки</p><p>4 - Затраты на культурно-массовую и физкультурно-оздоровительную работу со студентами</p><p>5 - Затраты на фонд оплаты труда прочего персонала</p><p>6 - Прочие затраты</p><p>7 - ИТОГО</p></body></html>"))
+        self.label_spends.setText(_translate("Form", "Обозначения затрат:\n"
+""))
         self.btn_save_table.setText(_translate("Form", "Сохранить таблицу"))
         self.btn_build_graphs.setText(_translate("Form", "Построить графики"))
         self.comboBox_row_col.setItemText(0, _translate("Form", "по строкам"))

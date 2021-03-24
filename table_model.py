@@ -2,6 +2,8 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtCore import Qt
 import copy
 
+import definitions
+
 
 class TableModel(QtCore.QAbstractTableModel):
 
@@ -28,7 +30,7 @@ class TableModel(QtCore.QAbstractTableModel):
             return Qt.AlignRight + Qt.AlignVCenter
         if role == Qt.BackgroundColorRole:
             if index.column() == self.columnCount(index) - 1:
-                return QtGui.QBrush(Qt.lightGray)
+                return QtGui.QBrush(QtGui.QColor(*definitions.HEADER_COLOR_RGB))
 
     def rowCount(self, index):
         return self._orig_df.shape[0]
