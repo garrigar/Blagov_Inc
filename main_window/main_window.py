@@ -8,6 +8,7 @@ from PyQt5 import QtWidgets
 import data_handler
 from table_window import TableWindow
 from .main_window_design import Ui_MainWindow
+import definitions
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -34,8 +35,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_gen.clicked.connect(self._handle_gen_button)
 
         # TODO: remove
-        # self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
-        # self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
+        self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
+        self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
 
         self._table_windows = []
 
@@ -118,9 +119,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # print(k)
 
-            data = pd.DataFrame(ans, columns=institutes_list, index=spends_list)
+            # обрезаем "ИТОГО"
+            ans = ans[:-1]
+            spends_list = spends_list[:-1]
 
-            desc_str = f"ступени: ({', '.join(desc_degrees)}), группы: ({', '.join(desc_groups)}), формы: ({', '.join(desc_forms)})"
+            spends_short_list = [definitions.SPENDS_NAMES.inv[spend_name] for spend_name in spends_list]
 
-            # TODO: description
-            self._open_table(data, desc_str)  # "<PARAMETERS DESCRIPTION>")
+            data = pd.DataFrame(ans, columns=institutes_list, index=spends_short_list)
+
+            desc_str = f"ступени - ({', '.join(desc_degrees)}); " \
+                       f"группы - ({', '.join(desc_groups)}); " \
+                       f"формы - ({', '.join(desc_forms)})"
+
+            self._open_table(data, desc_str)

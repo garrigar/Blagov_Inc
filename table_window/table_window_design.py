@@ -60,6 +60,7 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tableView.sizePolicy().hasHeightForWidth())
         self.tableView.setSizePolicy(sizePolicy)
+        self.tableView.setStyleSheet("QHeaderView::section { background-color:gray }")
         self.tableView.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.tableView.setObjectName("tableView")
         self.verticalLayout.addWidget(self.tableView)
@@ -86,13 +87,3 @@ class Ui_Form(object):
         self.comboBox_row_col.setItemText(0, _translate("Form", "по строкам"))
         self.comboBox_row_col.setItemText(1, _translate("Form", "по столбцам"))
         self.label_description.setText(_translate("Form", "TextLabel"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())
