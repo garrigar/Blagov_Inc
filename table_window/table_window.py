@@ -8,6 +8,10 @@ import definitions
 import table_model
 from .table_window_design import Ui_Form
 
+import openpyxl as opl
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Alignment
+
 
 class TableWindow(QtWidgets.QWidget, Ui_Form):
     def __init__(self, dataframe, description):
@@ -106,7 +110,25 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
             return
         # print(f'"{filename[0]}"')
         try:
-            self._model.get_dataframe().to_excel(filename[0], sheet_name=self._description)  # TODO: description
+            self._model.get_dataframe().to_excel(filename[0])  # TODO: description
+            # Описание таблицы для записи в excel
+            val_disc = self._description
+
+            # Открытие таблицы
+            wb = opl.load_workbook(f'{filename[0]}')
+            # Выбираем лист (он у нас один [0])
+            sheet = wb.worksheets[0]
+            # Координаты ячеек
+            coordonates = (f"A{sheet.max_row + 1}", f"{get_column_letter(sheet.max_column)}{sheet.max_row + 1}")
+            sheet[f"{coordonates[0]}"] = val_disc
+            sheet.merge_cells(f'{coordonates[0]}:{coordonates[1]}')
+
+            # Выравнивание по центру
+            sheet[f"{coordonates[0]}"].alignment = Alignment(horizontal='center')
+
+            # Перезапись файла
+            wb.save(f'{filename[0]}')
+
         except Exception as e:
             print("Ошибка сохранения таблицы!")
             print(e)
