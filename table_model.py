@@ -1,8 +1,9 @@
 from PyQt5 import QtCore, QtGui
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QModelIndex
 import copy
 
 import definitions
+import pandas as pd
 
 
 class TableModel(QtCore.QAbstractTableModel):
@@ -13,7 +14,7 @@ class TableModel(QtCore.QAbstractTableModel):
         self._shown_df = copy.deepcopy(self._orig_df)
         self._recalculate_total()
 
-    def data(self, index, role):
+    def data(self, index: QModelIndex, role: int = ...):
         if role == Qt.DisplayRole:
             value = self._shown_df.iloc[index.row(), index.column()]
 
@@ -22,7 +23,7 @@ class TableModel(QtCore.QAbstractTableModel):
                     return ""
                 return f'{value:.3f}'
 
-            return f'{value:.1f}'
+            return ('{:.' + str(definitions.DIGITS_AFTER_DECIMAL) + 'f}').format(value)
 
         if role == Qt.TextAlignmentRole:
             if index.column() == self.columnCount(index) - 1:
@@ -32,13 +33,13 @@ class TableModel(QtCore.QAbstractTableModel):
             if index.column() == self.columnCount(index) - 1:
                 return QtGui.QBrush(QtGui.QColor(*definitions.HEADER_COLOR_RGB))
 
-    def rowCount(self, index):
+    def rowCount(self, parent: QModelIndex = ...) -> int:
         return self._orig_df.shape[0]
 
-    def columnCount(self, index):
+    def columnCount(self, parent: QModelIndex = ...) -> int:
         return self._orig_df.shape[1]
 
-    def headerData(self, section, orientation, role):
+    def headerData(self, section: int, orientation: Qt.Orientation, role: int = ...):
         # section is the index of the column/row.
         if role == Qt.DisplayRole:
             if orientation == Qt.Horizontal:
@@ -46,8 +47,6 @@ class TableModel(QtCore.QAbstractTableModel):
 
             if orientation == Qt.Vertical:
                 return str(self._orig_df.index[section])
-        # if role == Qt.BackgroundColorRole:
-        #     return QtGui.QBrush(Qt.gray)
 
     def flags(self, index):
         flags = super(self.__class__, self).flags(index)
@@ -58,7 +57,7 @@ class TableModel(QtCore.QAbstractTableModel):
 
         return flags
 
-    def setData(self, index, value, role):
+    def setData(self, index: QModelIndex, value, role: int = ...) -> bool:
         if role == Qt.EditRole:
             if index.column() == self.columnCount(index) - 1:
                 if self._validate_coefficient(value):
@@ -73,11 +72,19 @@ class TableModel(QtCore.QAbstractTableModel):
         self._shown_df.iloc[row_index] = self._orig_df.iloc[row_index] * coefficient
         self._recalculate_total()
 
-    def get_dataframe(self):
-        return self._shown_df
+    def get_output_dataframe(self):
+        spends_short = self._shown_df.index.tolist()
+        spends_long = [definitions.SPENDS_NAMES[spend_name] for spend_name in spends_short[:-1]]
+        spends_long.append(spends_short[-1])  # ИТОГО не удлинняется
+        df = pd.DataFrame(self._shown_df.values, columns=self._shown_df.columns.tolist(), index=spends_long)
+        df.iloc[-1, -1] = None  # rightmost bottom cell is getting "muted"
+        return df
 
     def get_cell_value(self, i, j):
         return self._shown_df.iloc[i, j]
+
+    def get_coefficients(self):
+        return self._shown_df.iloc[:, -1].values[:-1]
 
     @staticmethod
     def _validate_coefficient(value) -> bool:

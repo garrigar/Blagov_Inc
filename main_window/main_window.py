@@ -34,9 +34,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.button_gen.clicked.connect(self._handle_gen_button)
 
-        # TODO: remove
-        self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
-        self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
+        # self.ledit_numb_stud.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/1.xls')
+        # self.ledit_price.setText(r'C:/Users/Admin/Documents/PROGRAMMING/Python/Projects/Blagov_Inc/xls/2.xlsx')
 
         self._table_windows = []
 
@@ -80,55 +79,60 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def _handle_gen_button(self):
 
-        filename_stud = self.ledit_numb_stud.text()
-        filename_prices = self.ledit_price.text()
+        try:
+            filename_stud = self.ledit_numb_stud.text()
+            filename_prices = self.ledit_price.text()
 
-        if self._check_file_exists("Файл с информацией о студентах", filename_stud) \
-                and self._check_file_exists("Файл с информацией о затратах", filename_prices):
+            if self._check_file_exists("Файл с информацией о студентах", filename_stud) \
+                    and self._check_file_exists("Файл с информацией о затратах", filename_prices):
 
-            data_hnd = data_handler.DataHandler(filename_stud, filename_prices)
-            # TODO catch Pandas exceptions (wrong lists)
+                data_hnd = data_handler.DataHandler(filename_stud, filename_prices)
 
-            list_chb_st = self._filter_selected_checkboxes(self._list_chb_st)
-            list_chb_group = self._filter_selected_checkboxes(self._list_chb_group)
-            list_chb_form = self._filter_selected_checkboxes(self._list_chb_form)
+                list_chb_st = self._filter_selected_checkboxes(self._list_chb_st)
+                list_chb_group = self._filter_selected_checkboxes(self._list_chb_group)
+                list_chb_form = self._filter_selected_checkboxes(self._list_chb_form)
 
-            if len(list_chb_st) == 0 or len(list_chb_form) == 0 or len(list_chb_group) == 0:
-                QtWidgets.QMessageBox.about(self, "Внимание", "Не все параметры выбраны")
-                return
+                if len(list_chb_st) == 0 or len(list_chb_form) == 0 or len(list_chb_group) == 0:
+                    QtWidgets.QMessageBox.about(self, "Внимание", "Не все параметры выбраны")
+                    return
 
-            array_sample, spends_list, institutes_list = data_hnd.result_table(list_chb_st[0].property("key"),
-                                                                               list_chb_group[0].property("key"),
-                                                                               list_chb_form[0].property("key"))
-            ans = np.zeros_like(array_sample, dtype=np.float64)
+                array_sample, spends_list, institutes_list = data_hnd.result_table(list_chb_st[0].property("key"),
+                                                                                   list_chb_group[0].property("key"),
+                                                                                   list_chb_form[0].property("key"))
+                ans = np.zeros_like(array_sample, dtype=np.float64)
 
-            desc_degrees = [chb_st.property("key") for chb_st in list_chb_st]
-            desc_groups = [chb_group.property("key") for chb_group in list_chb_group]
-            desc_forms = [chb_form.property("key") for chb_form in list_chb_form]
+                desc_degrees = [chb_st.property("key") for chb_st in list_chb_st]
+                desc_groups = [chb_group.property("key") for chb_group in list_chb_group]
+                desc_forms = [chb_form.property("key") for chb_form in list_chb_form]
 
-            # k = 0
+                # k = 0
 
-            for chb_st in list_chb_st:
-                for chb_group in list_chb_group:
-                    for chb_form in list_chb_form:
-                        # k += 1
-                        degree = chb_st.property("key")
-                        group = chb_group.property("key")
-                        form = chb_form.property("key")
-                        ans += data_hnd.result_table(degree, group, form)[0]
+                for chb_st in list_chb_st:
+                    for chb_group in list_chb_group:
+                        for chb_form in list_chb_form:
+                            # k += 1
+                            degree = chb_st.property("key")
+                            group = chb_group.property("key")
+                            form = chb_form.property("key")
+                            ans += data_hnd.result_table(degree, group, form)[0]
 
-            # print(k)
+                # print(k)
 
-            # обрезаем "ИТОГО"
-            ans = ans[:-1]
-            spends_list = spends_list[:-1]
+                # обрезаем "ИТОГО"
+                ans = ans[:-1]
+                spends_list = spends_list[:-1]
 
-            spends_short_list = [definitions.SPENDS_NAMES.inv[spend_name] for spend_name in spends_list]
+                spends_short_list = [definitions.SPENDS_NAMES.inv[spend_name] for spend_name in spends_list]
 
-            data = pd.DataFrame(ans, columns=institutes_list, index=spends_short_list)
+                data = pd.DataFrame(ans, columns=institutes_list, index=spends_short_list)
 
-            desc_str = f"ступени - ({', '.join(desc_degrees)}); " \
-                       f"группы - ({', '.join(desc_groups)}); " \
-                       f"формы - ({', '.join(desc_forms)})"
+                desc_str = f"ступени - ({', '.join(desc_degrees)}); " \
+                           f"группы - ({', '.join(desc_groups)}); " \
+                           f"формы - ({', '.join(desc_forms)})"
 
-            self._open_table(data, desc_str)
+                self._open_table(data, desc_str)
+
+        except Exception as e:
+            print(e)
+            QtWidgets.QMessageBox.critical(self, "Ошибка: возникло исключение", str(e))
+

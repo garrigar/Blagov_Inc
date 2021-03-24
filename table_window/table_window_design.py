@@ -83,7 +83,9 @@ class Ui_Form(object):
         self.label_spends.setText(_translate("Form", "Обозначения затрат:\n"
 ""))
         self.btn_save_table.setText(_translate("Form", "Сохранить таблицу"))
+        self.btn_build_graphs.setToolTip(_translate("Form", "<html><head/><body><p>Выделите ячейки с интересующими данными</p></body></html>"))
         self.btn_build_graphs.setText(_translate("Form", "Построить графики"))
+        self.comboBox_row_col.setToolTip(_translate("Form", "<html><head/><body><p>По строкам - вывод графиков конкретных затрат по институтам</p><p>По столбцам - вывод графиков распределения затрат у конкретных институтов</p></body></html>"))
         self.comboBox_row_col.setItemText(0, _translate("Form", "по строкам"))
         self.comboBox_row_col.setItemText(1, _translate("Form", "по столбцам"))
         self.label_description.setText(_translate("Form", "TextLabel"))
