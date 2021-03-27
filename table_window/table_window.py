@@ -105,9 +105,9 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
         plt.bar(xs, ys)
         plt.grid()
         plt.ylabel("Рублей (тыс.)")
+        dy = max(ys) * 0.01  # shift of the label over each column
         for index in range(len(ys)):
-            plt.text(index, ys[index] + 1, round(ys[index], definitions.DIGITS_AFTER_DECIMAL),
-                     horizontalalignment='center')
+            plt.text(index, ys[index] + dy, definitions.format_number(ys[index]), horizontalalignment='center')
 
         plt.title(title + '\n' + self._description.replace(";", ";\n"))
 

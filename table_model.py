@@ -23,7 +23,7 @@ class TableModel(QtCore.QAbstractTableModel):
                     return ""
                 return f'{value:.3f}'
 
-            return ('{:.' + str(definitions.DIGITS_AFTER_DECIMAL) + 'f}').format(value)
+            return definitions.format_number(value)
 
         if role == Qt.TextAlignmentRole:
             if index.column() == self.columnCount(index) - 1:

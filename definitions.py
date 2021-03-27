@@ -13,3 +13,12 @@ SPENDS_NAMES.update({
 HEADER_COLOR_RGB = (207, 207, 207)
 
 DIGITS_AFTER_DECIMAL = 2
+DELIMITER_IS_SPACE = True
+
+
+def format_number(value):
+    string = ('{:,.' + str(DIGITS_AFTER_DECIMAL) + 'f}').format(value)
+    if DELIMITER_IS_SPACE:
+        return string.replace(',', ' ').replace('.', ',')
+    else:
+        return string.replace(',', 'X').replace('.', ',').replace('X', '.')
