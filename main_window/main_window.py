@@ -20,7 +20,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self._list_chb_st = [self.chb_st_bak, self.chb_st_mag, self.chb_st_asp]
         self._list_chb_group = [self.chb_group_1, self.chb_group_2, self.chb_group_3]
-        self._list_chb_form = [self.chb_form_bud_full, self.chb_form_pay_full, self.chb_form_pay_dist]
+        self._list_chb_form = [self.chb_form_budget, self.chb_form_pay_full, self.chb_form_pay_dist]
 
         self._bind_master_and_servants(self.chb_st_all, self._list_chb_st)
         self._bind_master_and_servants(self.chb_group_all, self._list_chb_group)

@@ -28,7 +28,7 @@ class DataHandler:
                                       (self.df_students['Форма обучения'] == form)]
         counts = counts[counts.columns[3:]]
 
-        if form == "бюджет очно" or form == "платники очно":
+        if form == "бюджетники" or form == "платники очно":
             df = self.df_prices_budget
         else:
             df = self.df_prices_paid

@@ -313,7 +313,7 @@
      <string>платники заочно</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="chb_form_bud_full">
+   <widget class="QCheckBox" name="chb_form_budget">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -323,7 +323,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Бюджет очно</string>
+     <string>Бюджетники</string>
     </property>
     <property name="checked">
      <bool>false</bool>
@@ -332,7 +332,7 @@
      <bool>false</bool>
     </property>
     <property name="key" stdset="0">
-     <string>бюджет очно</string>
+     <string>бюджетники</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="chb_form_pay_full">
