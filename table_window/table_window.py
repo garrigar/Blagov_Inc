@@ -25,8 +25,9 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
         self._description = description
         self.label_description.setText(self._description)
 
+        dataframe['ИТОГО\nпо затрате'] = dataframe.sum(axis=1)
         dataframe['Коэффициент'] = np.ones(dataframe.shape[0])
-        dataframe.loc['ИТОГО'] = np.zeros(dataframe.shape[1])
+        dataframe.loc['ИТОГО\nпо институту'] = np.zeros(dataframe.shape[1])
 
         self._columns_names = dataframe.columns.tolist()
         self._rows_names = dataframe.index.tolist()
@@ -100,6 +101,7 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
         plt.show()
 
     def _show_graph(self, xs, ys, title):
+        title = title.replace('\n', ' ')
         fig = plt.figure()
         fig.canvas.set_window_title(title)
         plt.bar(xs, ys)
@@ -131,6 +133,8 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
             for row in sheet.rows:
                 for cell in row:
                     if cell.value:
+                        if type(cell.value) == str:
+                            cell.value = cell.value.replace('\n', ' ')
                         dims[cell.column_letter] = max((dims.get(cell.column_letter, 0),
                                                         self._get_cell_length(cell.value)))
             for col, value in dims.items():
@@ -156,10 +160,9 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
 
     @staticmethod
     def _get_cell_length(value):
-        value = str(value)
         try:
             float_value = float(value)
             str_value = str(round(float_value, definitions.DIGITS_AFTER_DECIMAL))
         except ValueError:
-            str_value = value
+            str_value = str(value)
         return len(str_value)

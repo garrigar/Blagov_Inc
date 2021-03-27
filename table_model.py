@@ -32,6 +32,8 @@ class TableModel(QtCore.QAbstractTableModel):
         if role == Qt.BackgroundColorRole:
             if index.column() == self.columnCount(index) - 1:
                 return QtGui.QBrush(QtGui.QColor(*definitions.HEADER_COLOR_RGB))
+            if (index.column() == self.columnCount(index) - 2) or (index.row() == self.rowCount(index) - 1):
+                return QtGui.QBrush(QtGui.QColor(*definitions.TOTAL_COLOR_RGB))
 
     def rowCount(self, parent: QModelIndex = ...) -> int:
         return self._orig_df.shape[0]
@@ -47,6 +49,9 @@ class TableModel(QtCore.QAbstractTableModel):
 
             if orientation == Qt.Vertical:
                 return str(self._orig_df.index[section])
+
+        if role == Qt.TextAlignmentRole:
+            return Qt.AlignCenter
 
     def flags(self, index):
         flags = super(self.__class__, self).flags(index)

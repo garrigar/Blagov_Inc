@@ -126,9 +126,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
                 data = pd.DataFrame(ans, columns=institutes_list, index=spends_short_list)
 
-                desc_str = f"ступени - ({', '.join(desc_degrees)}); " \
-                           f"группы - ({', '.join(desc_groups)}); " \
-                           f"формы - ({', '.join(desc_forms)})"
+                desc_str = "ступени: {" + ', '.join(desc_degrees) + "}; " \
+                           "группы: {" + ', '.join(desc_groups) + "}; " \
+                           "формы: {" + ', '.join(desc_forms) + "}"
 
                 self._open_table(data, desc_str)
 
