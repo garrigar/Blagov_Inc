@@ -70,7 +70,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Анализ доходов институтов - Результаты"))
+        Form.setWindowTitle(_translate("Form", "Анализ доходов институтов Самарского университета - Результаты"))
         self.label.setText(_translate("Form", "Обозначения институтов:\n"
 "ИРКТ –институт ракетно-космической техники,\n"
 "ИДЭУ – институт двигателей и энергетических установок,\n"
@@ -88,4 +88,4 @@ class Ui_Form(object):
         self.comboBox_row_col.setToolTip(_translate("Form", "<html><head/><body><p>По строкам - вывод графиков конкретных затрат по институтам</p><p>По столбцам - вывод графиков распределения затрат у конкретных институтов</p></body></html>"))
         self.comboBox_row_col.setItemText(0, _translate("Form", "по строкам"))
         self.comboBox_row_col.setItemText(1, _translate("Form", "по столбцам"))
-        self.label_description.setText(_translate("Form", "TextLabel"))
+        self.label_description.setText(_translate("Form", "Выбранные параметры:"))

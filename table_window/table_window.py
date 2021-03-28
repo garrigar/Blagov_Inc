@@ -15,7 +15,7 @@ from .table_window_design import Ui_Form
 class TableWindow(QtWidgets.QWidget, Ui_Form):
     def __init__(self, dataframe, description):
         # Это здесь нужно для доступа к переменным, методам
-        # и т.д. в файле main_window_design.py
+        # и т.д. в файле table_window_design.py
         super().__init__()
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
 
@@ -23,7 +23,7 @@ class TableWindow(QtWidgets.QWidget, Ui_Form):
                                   + '\n'.join([f'{key} - {value}' for key, value in definitions.SPENDS_NAMES.items()]))
 
         self._description = description
-        self.label_description.setText(self._description)
+        self.label_description.setText(f'{self.label_description.text()} {self._description}')
 
         dataframe['ИТОГО\nпо затрате'] = dataframe.sum(axis=1)
         dataframe['Коэффициент'] = np.ones(dataframe.shape[0])

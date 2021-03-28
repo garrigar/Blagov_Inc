@@ -1,0 +1,1 @@
+pyuic5 about_window_design.ui -o about_window_design.py

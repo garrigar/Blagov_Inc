@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Анализ доходов институтов - Результаты</string>
+   <string>Анализ доходов институтов Самарского университета - Результаты</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="leftMargin">
@@ -114,7 +114,7 @@
      <item>
       <widget class="QLabel" name="label_description">
        <property name="text">
-        <string>TextLabel</string>
+        <string>Выбранные параметры:</string>
        </property>
       </widget>
      </item>

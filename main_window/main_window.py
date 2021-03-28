@@ -6,6 +6,7 @@ import pandas as pd
 from PyQt5 import QtWidgets
 
 import data_handler
+from about_window import AboutWindow
 from table_window import TableWindow
 from .main_window_design import Ui_MainWindow
 import definitions
@@ -17,6 +18,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # и т.д. в файле main_window_design.py
         super().__init__()
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
+
+        self._about_window = AboutWindow()
+        self.action_about.triggered.connect(self._about_window.show)
 
         self._list_chb_st = [self.chb_st_bak, self.chb_st_mag, self.chb_st_asp]
         self._list_chb_group = [self.chb_group_1, self.chb_group_2, self.chb_group_3]
